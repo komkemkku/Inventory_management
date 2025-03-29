@@ -1,0 +1,138 @@
+/* รีเซ็ตพื้นฐาน */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 2rem;
+    background-color: #f9f9f9;
+}
+
+
+.form-container {
+    background: #fff;
+    border: 1px solid #000;
+    border-radius: 6px;
+    max-width: 800px;
+    height: 500px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-header {
+    background-color: #000;
+    padding: 0.5rem 1rem;
+    color: #fff;
+    font-weight: bold;
+    font-size: large;
+    text-align: center;
+    display: flex;
+    align-items: center; 
+    justify-content: center; 
+    height: 50px;
+    margin-bottom: 1rem;
+    margin-top: 10px;
+    border-radius: 4px;
+}
+
+/* .form-title {
+    margin: 0.5rem 0;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: bold;
+} */
+
+.form-subtitle {
+    margin: 0.5rem 0;
+    color: #000;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.table-form {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1rem;
+    margin-top: 60px;
+}
+.table-form td {
+    padding: 0.5rem;
+    vertical-align: middle;
+}
+
+.table-form .label-cell {
+    width: 160px;
+    text-align: right;
+    color: #000;
+}
+
+.table-form .input-cell input[type="date"] {
+    width: 250px;
+    padding: 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+.table-form .input-cell select {
+    width: 150px;
+    padding: 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 15px;
+}
+
+.button-group {
+    margin-top: 1.5rem;
+    text-align: center;
+    margin-top: 80px;
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.btn-save {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-save:hover {
+    background-color: #0056b3;
+}
+
+.btn-cancel {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-cancel:hover {
+    background-color: #5a6268;
+}
+
+.error {
+    color: red;
+    margin-bottom: 1rem;
+}
+
+.add-customer {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+}
+.add-customer a {
+    color: #007bff;
+    text-decoration: none;
+}
+.add-customer a:hover {
+    text-decoration: underline;
+}

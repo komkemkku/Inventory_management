@@ -1,0 +1,100 @@
+/* รีเซ็ตพื้นฐาน */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ตั้งค่าพื้นหลังและฟอนต์ */
+body {
+    font-family: sans-serif;
+    background-color: #f9f9f9;
+    margin: 2rem;
+}
+
+/* กล่องหลัก */
+.container {
+    background: #fff;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    transition: border 0.2s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #007bff;
+}
+
+.button-group {
+    margin-top: 1.5rem;
+    text-align: center;
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    margin: 0 0.5rem;
+    text-decoration: none;
+    display: inline-block;
+}
+
+/* ปุ่มบันทึก */
+.btn-save {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.btn-save:hover {
+    background-color: #0056b3;
+}
+
+/* ปุ่มยกเลิก */
+.btn-cancel {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-cancel:hover {
+    background-color: #5a6268;
+}
+
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

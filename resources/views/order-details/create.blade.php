@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-field">
                     <label>วันที่สั่ง :</label>
-                    <input type="date" readonly value="{{ $order->order_date }}">
+                    <input type="date" readonly value="{{ \Carbon\Carbon::parse($order->order_date)->format('Y-m-d') }}">
                 </div>
                 <div class="form-field">
                     <label>Order No :</label>
@@ -49,31 +49,33 @@
 
             <div class="form-group-product">
                 <label for="good_id">เลือกสินค้า :</label>
-                <select name="good_id" id="good_id" required>
+                <select name="good_id" id="good_id" required onchange="updateCostUnit()">
                     @foreach($goods as $good)
-                    <option value="{{ $good->goods_id }}">{{ $good->goods_name }}</option>
+                    <option value="{{ $good->goods_id }}" data-cost="{{ $good->cost_unit }}">{{ $good->goods_name }}</option>
                     @endforeach
                 </select>
             </div>
 
+
             <div class="form-group-date">
-                <label for="ord_date">วันที่สั่ง :</label>
+                <label for="ord_date">วันที่ส่งสินค้า :</label>
                 <input type="date" id="ord_date" name="ord_date" required>
 
-                <label for="fin_date">วันที่ส่ง :</label>
+                <label for="fin_date">วันที่กำหนดส่ง :</label>
                 <input type="date" id="fin_date" name="fin_date" required>
             </div>
 
             <div class="form-group-price">
                 <label for="amount">จำนวน :</label>
-                <input type="number" id="amount" name="amount" min="1" required>
+                <input type="number" id="amount" name="amount" min="1" required onchange="updateTotalPrice()">
 
                 <label for="cost_unit">ราคาต่อหน่วย :</label>
-                <input type="number" id="cost_unit" name="cost_unit" step="0.01" required>
+                <input type="number" id="cost_unit" name="cost_unit" step="0.01" readonly>
 
-                <label for="cost_unit">ราคารวม :</label>
-                <input type="number" id="cost_unit" name="cost_unit" step="0.01" required>
+                <label for="total_price">ราคารวม :</label>
+                <input type="number" id="total_price" name="total_price" readonly>
             </div>
+
 
             <button type="submit" class="btn-submit">เพิ่มสินค้า</button>
         </form>
@@ -89,7 +91,7 @@
                         <th>รหัสสินค้า</th>
                         <th>รายละเอียด</th>
                         <th>วันที่กำหนดส่ง</th>
-                        <th>วันที่ส่ง</th>
+                        <th>วันที่ส่งสินค้า</th>
                         <th>จำนวน</th>
                         <th>ราคาต่อหน่วย</th>
                         <th>ราคารวม</th>
@@ -100,8 +102,8 @@
                     <tr>
                         <td>{{ $item->product_code }}</td>
                         <td>{{ $item->product_name }}</td>
-                        <td>{{ $item->order_date }}</td>
-                        <td>{{ $item->delivery_date }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->order_date)->format('Y-m-d') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->delivery_date)->format('Y-m-d') }}</td>
                         <td>{{ $item->quantity }}</td>
                         <td>{{ $item->unit_price }}</td>
                         <td>{{ $item->total_price }}</td>
@@ -114,7 +116,30 @@
                 </tbody>
             </table>
         </div>
+        <!-- Footer -->
+        <div class="footer">
+            <button type="button" onclick="window.location.href='{{ route('orders.index') }}';" class="btn-back">กลับหน้ารายการ</button>
+        </div>
     </div>
 </body>
+<script>
+    function updateCostUnit() {
+        const selectedProduct = document.querySelector('#good_id');
+        const costUnit = selectedProduct.options[selectedProduct.selectedIndex].dataset.cost || 0;
+
+        document.getElementById('cost_unit').value = parseFloat(costUnit).toFixed(2);
+
+        updateTotalPrice();
+    }
+
+    function updateTotalPrice() {
+        const amount = parseFloat(document.getElementById('amount').value) || 0;
+        const costUnit = parseFloat(document.getElementById('cost_unit').value) || 0;
+
+        const totalPrice = amount * costUnit;
+
+        document.getElementById('total_price').value = totalPrice.toFixed(2);
+    }
+</script>
 
 </html>

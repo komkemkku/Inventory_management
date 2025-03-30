@@ -33,10 +33,11 @@ class OrderDetailController extends Controller
         $orderItems = DB::table('d_order')
             ->join('goods_name', 'd_order.good_id', '=', 'goods_name.goods_id')
             ->select(
+                'd_order.d_id as d_id',
                 'goods_name.goods_id as product_code',
                 'goods_name.goods_name as product_name',
                 'd_order.ord_date as order_date',
-                'd_order.fin_date as delivery_date',
+                'd_order.fin_date as final_date',
                 'd_order.amount as quantity',
                 'goods_name.cost_unit as unit_price',
                 DB::raw('d_order.amount * goods_name.cost_unit as total_price')
@@ -109,19 +110,41 @@ class OrderDetailController extends Controller
             'cost_unit' => 'required|numeric|min:0',
         ]);
 
-        // บันทึกข้อมูลสินค้า
-        DB::table('d_order')->insert([
-            'order_id'   => $request->order_id,
-            'good_id'    => $request->good_id,
-            'ord_date'   => $request->ord_date,
-            'fin_date'   => $request->fin_date,
-            'amount'     => $request->amount,
-            'cost_unit'  => $request->cost_unit,
-            'tot_prc'    => $request->amount * $request->cost_unit,
-        ]);
+        // ตรวจสอบว่ามีสินค้านี้ในคำสั่งซื้อหรือไม่
+        $existingItem = DB::table('d_order')
+            ->where('order_id', $request->order_id)
+            ->where('good_id', $request->good_id)
+            ->first();
 
-        return redirect()->route('orderDetails.index', $request->order_id)
-            ->with('success', 'เพิ่มข้อมูลสินค้าในคำสั่งซื้อเรียบร้อย!');
+        if ($existingItem) {
+            // หากมีสินค้าอยู่แล้ว ทำการอัปเดตจำนวนสินค้าและราคารวม
+            DB::table('d_order')
+                ->where('order_id', $request->order_id)
+                ->where('good_id', $request->good_id)
+                ->update([
+                    'amount' => $existingItem->amount + $request->amount,
+                    'tot_prc' => ($existingItem->amount + $request->amount) * $request->cost_unit, // อัปเดตราคารวม
+                    'ord_date' => $request->ord_date,
+                    'fin_date' => $request->fin_date,
+                ]);
+
+            return redirect()->route('orderDetails.create', $request->order_id)
+                ->with('success', 'อัปเดตข้อมูลสินค้าในคำสั่งซื้อเรียบร้อย!');
+        } else {
+            // หากไม่มีสินค้า ทำการเพิ่มรายการใหม่
+            DB::table('d_order')->insert([
+                'order_id'   => $request->order_id,
+                'good_id'    => $request->good_id,
+                'ord_date'   => $request->ord_date,
+                'fin_date'   => $request->fin_date,
+                'amount'     => $request->amount,
+                'cost_unit'  => $request->cost_unit,
+                'tot_prc'    => $request->amount * $request->cost_unit,
+            ]);
+
+            return redirect()->route('orderDetails.create', $request->order_id)
+                ->with('success', 'เพิ่มข้อมูลสินค้าในคำสั่งซื้อเรียบร้อย!');
+        }
     }
 
     /**
@@ -175,9 +198,21 @@ class OrderDetailController extends Controller
             return back()->with('error', 'ไม่พบรายการสินค้าที่ระบุ');
         }
 
-        // ลบข้อมูลสินค้าจากฐานข้อมูล
-        DB::table('d_order')->where('d_id', $id)->delete();
+        $orderId = $orderDetail->order_id;
 
-        return back()->with('success', 'ลบข้อมูลสินค้าเรียบร้อย!');
+        $affectedRows = DB::table('d_order')->where('d_id', $id)->delete();
+
+        if ($affectedRows === 0) {
+            return back()->with('error', 'เกิดข้อผิดพลาดในการลบข้อมูลสินค้า!');
+        }
+
+        $remainingItems = DB::table('d_order')->where('order_id', $orderId)->count();
+
+        if ($remainingItems === 0) {
+            // ลบคำสั่งซื้อออกจาก h_order หากไม่มีสินค้าเหลืออยู่
+            DB::table('h_order')->where('order_id', $orderId)->delete();
+        }
+
+        return back()->with('success', 'ลบข้อมูลสินค้าสำเร็จและตรวจสอบคำสั่งซื้อเรียบร้อยแล้ว!');
     }
 }

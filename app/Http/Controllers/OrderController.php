@@ -48,14 +48,13 @@ class OrderController extends Controller
             'cus_id' => 'required|exists:cus_name,cus_id',
             'order_date' => 'required|date',
         ]);
-    
+
         // เพิ่มข้อมูลในตาราง h_order และรับ order_id
         $orderId = DB::table('h_order')->insertGetId([
             'cus_id'     => $request->cus_id,
             'order_date' => $request->order_date,
-        ], 'order_id'); // ระบุว่าคอลัมน์ที่ต้องการดึงกลับคือ order_id
-    
-        // Redirect ไปยังหน้าเพิ่มรายละเอียดออเดอร์
+        ], 'order_id');
+
         return redirect()->route('orderDetails.create', ['orderId' => $orderId])
             ->with('success', 'เพิ่มคำสั่งซื้อเรียบร้อย! กรุณาเพิ่มรายการสินค้า');
     }
@@ -106,7 +105,6 @@ class OrderController extends Controller
             ->where('d_order.order_id', $id)
             ->get();
 
-        // ดึงรายการลูกค้าสำหรับ dropdown
         $customers = DB::table('cus_name')->get();
 
         return view('order-detail.index', compact('order', 'orderItems', 'customers'));
@@ -152,9 +150,16 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
+        // ตรวจสอบว่ามีข้อมูลใน d_order หรือไม่
+        $relatedItems = DB::table('d_order')->where('order_id', $id)->exists();
+
+        if ($relatedItems) {
+            DB::table('d_order')->where('order_id', $id)->delete();
+        }
+
         DB::table('h_order')->where('order_id', $id)->delete();
 
         return redirect()->route('orders.index')
-            ->with('success', 'ลบข้อมูลคำสั่งซื้อเรียบร้อย!');
+            ->with('success', 'ลบข้อมูลคำสั่งซื้อและรายการสินค้าที่เกี่ยวข้องเรียบร้อยแล้ว!');
     }
 }

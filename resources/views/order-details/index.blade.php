@@ -20,13 +20,13 @@
         <h4>รายละเอียดลูกค้า</h4>
         <div class="section-line">
             <label for="customer-code">รหัสลูกค้า :</label>
-            <span id="customer-code">{{ $order->cus_id }}</span>
+            <span id="customer-code">{{ $order->customer_code }}</span>
             <label for="customer-name">ชื่อลูกค้า :</label>
-            <span id="customer-name">{{ $order->cus_name }}</span>
+            <span id="customer-name">{{ $order->customer_name }}</span>
             <label for="order-date">วันที่สั่ง :</label>
             <span id="order-date">{{ \Carbon\Carbon::parse($order->order_date)->format('Y-m-d') }}</span>
             <label for="order-number">Order No :</label>
-            <span id="order-number">{{ $order->order_id }}</span>
+            <span id="order-number">{{ $order->order_number }}</span>
         </div>
 
         <!-- Product Information Table -->
@@ -38,7 +38,7 @@
                         <th>รหัสสินค้า</th>
                         <th>ชื่อสินค้า</th>
                         <th>วันกำหนดส่งสินค้า</th>
-                        <th>วันนที่ส่งสินค้าจริง</th>
+                        <th>วันที่ส่งสินค้า</th>
                         <th>จำนวนที่สั่ง</th>
                         <th>ราคาต่อหน่วย</th>
                         <th>ราคารวม</th>
@@ -49,16 +49,16 @@
                     @if($orderItems->isNotEmpty())
                     @foreach($orderItems as $item)
                     <tr>
-                        <td>{{ $item->good_id }}</td>
+                        <td>{{ $item->product_code }}</td>
                         <td>{{ $item->product_name }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->ord_date)->format('Y-m-d') }}</td>
-                        <td>{{ \Carbon\Carbon::parse($item->fin_date)->format('Y-m-d') }}</td>
-                        <td>{{ $item->amount }}</td>
-                        <td>{{ $item->cost_unit }}</td>
-                        <td>{{ $item->tot_prc }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->order_date)->format('Y-m-d') }}</td>
+                        <td>{{ \Carbon\Carbon::parse($item->final_date)->format('Y-m-d') }}</td>
+                        <td>{{ $item->quantity }}</td>
+                        <td>{{ $item->unit_price }}</td>
+                        <td>{{ $item->total_price }}</td>
                         <td>
                             <a href="{{ route('orderDetails.edit', $item->d_id) }}" class="action-btn btn-edit">แก้ไข</a>
-                            <form action="{{ route('orderDetails.destroy', $item->d_id) }}" method="DELETE" style="display: inline;">
+                            <form action="{{ route('orderDetails.destroy', $item->d_id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="action-btn btn-delete" onclick="confirmDelete(event)">ลบ</button>
@@ -68,7 +68,7 @@
                     @endforeach
                     @else
                     <tr>
-                        <td colspan="6" style="text-align: center; color: red;">ไม่พบข้อมูลสินค้า</td>
+                        <td colspan="8" style="text-align: center; color: red;">ไม่พบข้อมูลสินค้า</td>
                     </tr>
                     @endif
                 </tbody>

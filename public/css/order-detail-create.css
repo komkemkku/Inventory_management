@@ -16,7 +16,7 @@ body {
 
 .header {
     margin-bottom: 40px;
-    text-align: center;
+    /* text-align: center; */
     border-bottom: 2px solid #ccc;
     padding-bottom: 10px;
 }
@@ -102,6 +102,8 @@ button,
     background-color: #4caf50;
     color: #fff;
     padding: 12px 25px;
+    margin-top: 10px;
+    margin-bottom: 20px;
     border: none;
     border-radius: 8px;
     font-size: 16px;

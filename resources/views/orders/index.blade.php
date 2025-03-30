@@ -14,12 +14,15 @@
         <div class="header-buttons">
             <a href="{{ route('goods.index') }}">สินค้า</a>
             <a href="{{ route('customers.index') }}">ลูกค้า</a>
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn-logout">ออกจากระบบ</button>
+            </form>
         </div>
     </div>
 
-    <!-- ตรวจสอบว่ามี session 'success' หรือไม่ -->
     @if(session('success'))
-    <div style="color: green; margin-bottom: 1rem;">
+    <div class="success-msg">
         {{ session('success') }}
     </div>
     @endif
@@ -36,24 +39,30 @@
             </tr>
         </thead>
         <tbody>
-            <!-- เช็กก่อนว่ามีข้อมูลหรือไม่ -->
             @if(count($orders) > 0)
             @foreach($orders as $order)
             <tr>
-                <!-- ตอนนี้ $order->cus_id มีค่าแล้ว -->
                 <td>{{ $order->cus_id }}</td>
                 <td>{{ $order->cus_name }}</td>
                 <td>{{ $order->order_id }}</td>
                 <td>{{ $order->count_item }}</td>
                 <td>{{ $order->total_amount }}</td>
                 <td>
-                    <button class="action-btn btn-edit">แก้ไข</button>
-                    <button class="action-btn btn-delete">ลบ</button>
+                    <!-- ปุ่มแก้ไข -->
+                    <a href="{{ route('orderDetails.index', $order->order_id) }}" class="action-btn btn-edit">แก้ไข</a>
+
+                    <!-- ปุ่มลบ -->
+                    <form action="{{ route('orders.destroy', $order->order_id) }}" method="DELETE" style="display: inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="action-btn btn-delete" onclick="confirmDelete(event)">ลบ</button>
+                    </form>
+
                 </td>
             </tr>
             @endforeach
             @else
-            <!-- ถ้าไม่มีข้อมูล ให้แสดงข้อความ -->
+
             <tr>
                 <td colspan="6" style="text-align: center; color: red;">
                     ยังไม่มีข้อมูล
@@ -68,5 +77,29 @@
     </a>
 
 </body>
+<!-- โหลด SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function confirmDelete(e) {
+        e.preventDefault();
+        const form = e.target.form;
+
+        Swal.fire({
+            title: 'ยืนยันการลบ?',
+            text: "คุณต้องการลบคำสั่งซื้อนี้หรือไม่?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'ใช่, ลบเลย',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+</script>
 
 </html>

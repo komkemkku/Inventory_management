@@ -15,6 +15,25 @@
 
         <h2>Login</h2>
 
+        <!-- @if($errors->has('username') || $errors->has('password'))
+        <script>
+            Swal.fire({
+                title: 'เกิดข้อผิดพลาด!',
+                text: `
+                @if($errors->has('username'))
+                    {{ $errors->first('username') }}
+                @endif
+                @if($errors->has('password'))
+                    {{ $errors->first('password') }}
+                @endif
+            `,
+                icon: 'error',
+                confirmButtonText: 'ตกลง',
+                confirmButtonColor: '#d33',
+            });
+        </script>
+        @endif -->
+
         <form action="{{ url('/login') }}" method="POST">
             @csrf
 
@@ -41,6 +60,8 @@
             <p>Don't have an account ? <a href="{{ route('register') }}">Register now</a></p>
         </div>
     </div>
+
 </body>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </html>

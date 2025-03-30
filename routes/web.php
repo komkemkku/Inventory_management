@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,8 +40,42 @@ Route::get('/orders/create', [OrderController::class, 'create'])
     ->name('orders.create')
     ->middleware('auth');
 
+Route::get('/orders/{id}/edit', [OrderController::class, 'edit'])
+    ->name('orders.edit')
+    ->middleware('auth');
+
+Route::get('/orders/{id}', [OrderController::class, 'destroy'])
+    ->name('orders.destroy')
+    ->middleware('auth');
+
 Route::post('/orders', [OrderController::class, 'store'])
     ->name('orders.store')
+    ->middleware('auth');
+
+
+// order detail
+Route::get('/order-details/{orderId}', [OrderDetailController::class, 'index'])
+    ->name('orderDetails.index')
+    ->middleware('auth');
+
+Route::get('/order-details/{orderId}/create', [OrderDetailController::class, 'create'])
+    ->name('orderDetails.create')
+    ->middleware('auth');
+
+Route::post('/order-details', [OrderDetailController::class, 'store'])
+    ->name('orderDetails.store')
+    ->middleware('auth');
+
+Route::get('/order-details/{id}/edit', [OrderDetailController::class, 'edit'])
+    ->name('orderDetails.edit')
+    ->middleware('auth');
+
+Route::put('/order-details/{id}', [OrderDetailController::class, 'update'])
+    ->name('orderDetails.update')
+    ->middleware('auth');
+
+Route::delete('/order-details/{id}', [OrderDetailController::class, 'destroy'])
+    ->name('orderDetails.destroy')
     ->middleware('auth');
 
 
@@ -53,11 +88,15 @@ Route::get('/customers/create', [CustomerController::class, 'create'])
     ->name('customers.create')
     ->middleware('auth');
 
-Route::get('/customers/update', [CustomerController::class, 'update'])
+Route::get('/customers/{id}/edit', [CustomerController::class, 'edit'])
+    ->name('customers.edit')
+    ->middleware('auth');
+
+Route::put('/customers/{id}', [CustomerController::class, 'update'])
     ->name('customers.update')
     ->middleware('auth');
 
-Route::get('/customers/destroy', [CustomerController::class, 'destroy'])
+Route::get('/customers/{id}', [CustomerController::class, 'destroy'])
     ->name('customers.destroy')
     ->middleware('auth');
 

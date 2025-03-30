@@ -1,0 +1,149 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.header {
+    /* text-align: center; */
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 32px;
+    color: #000000;
+}
+
+.header p {
+    font-size: 20px;
+    color: #666666;
+}
+
+.container h4 {
+    margin-top: 60px;
+}
+
+.section-line {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 16px;
+    color: #333;
+    flex-wrap: wrap;
+}
+
+.section-line label {
+    font-weight: bold;
+}
+
+.section-line span {
+    margin-right: 10px;
+}
+
+.section {
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.section h2 {
+    font-size: 18px;
+    color: #333333;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.form-group label {
+    width: 150px;
+    font-weight: bold;
+    color: #333333;
+}
+
+.form-group span {
+    flex: 1;
+    color: #555555;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+table th,
+table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+table th {
+    background-color: #f2f2f2;
+    color: #333333;
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.no-data {
+    text-align: center;
+    color: red;
+    font-style: italic;
+}
+
+/* ปุ่ม Action */
+.action-btn {
+    margin: 0 0.3rem;
+    padding: 0.4rem 0.8rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-edit {
+    background-color: #007bff;
+    text-decoration: none;
+}
+.btn-edit:hover {
+    background-color: #0056b3;
+}
+
+.btn-delete {
+    background-color: #dc3545;
+}
+.btn-delete:hover {
+    background-color: #c82333;
+}
+
+.footer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.footer button {
+    padding: 10px 20px;
+    background-color: #a00;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.footer button:hover {
+    opacity: 0.9;
+}

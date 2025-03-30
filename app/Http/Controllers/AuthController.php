@@ -68,9 +68,9 @@ class AuthController extends Controller
             // Redirect ไปยังหน้า orders.index หลังจากล็อกอินสำเร็จ
             return redirect()->intended(route('orders.index'));
         }
-        // ถ้าไม่ผ่าน ให้ส่งกลับไปหน้าเดิมพร้อม error
         return back()->withErrors([
-            'username' => 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
+            'username' => 'ชื่อผู้ใช้ไม่ถูกต้อง',
+            'password' => 'รหัสผ่านไม่ถูกต้อง',
         ]);
     }
 

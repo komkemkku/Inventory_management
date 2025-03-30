@@ -17,9 +17,10 @@
         </div>
     </div>
 
-    <!-- แสดงข้อความ success ถ้ามี -->
     @if(session('success'))
-    <div class="success-msg">{{ session('success') }}</div>
+    <div class="success-msg">
+        {{ session('success') }}
+    </div>
     @endif
 
     <!-- ตารางแสดงข้อมูลลูกค้า -->
@@ -38,11 +39,11 @@
                 <td>{{ $customer->cus_id }}</td>
                 <td>{{ $customer->cus_name }}</td>
                 <td>
-                    <a href="{{ route('customers.update', $customer->cus_id) }}" class="action-btn btn-edit">แก้ไข</a>
-                    <form action="{{ route('customers.destroy', $customer->cus_id) }}" method="POST" style="display: inline-block;">
+                    <a href="{{ route('customers.edit', $customer->cus_id) }}" class="action-btn btn-edit">แก้ไข</a>
+                    <form action="{{ route('customers.destroy', $customer->cus_id) }}" method="DELETE" style="display: inline-block;">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="action-btn btn-delete">ลบ</button>
+                        <button type="submit" class="action-btn btn-delete" onclick="confirmDelete(event)">ลบ</button>
                     </form>
                 </td>
             </tr>
@@ -55,5 +56,29 @@
         </tbody>
     </table>
 </body>
+<!-- โหลด SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    function confirmDelete(e) {
+        e.preventDefault();
+        const form = e.target.form;
+
+        Swal.fire({
+            title: 'ยืนยันการลบ?',
+            text: "คุณต้องการลบลูกค้านี้หรือไม่?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'ใช่, ลบเลย',
+            cancelButtonText: 'ยกเลิก'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                form.submit();
+            }
+        });
+    }
+</script>
 
 </html>

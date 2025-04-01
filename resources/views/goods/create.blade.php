@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <title>เพิ่มสินค้าใหม่</title>
     <link rel="stylesheet" href="{{ asset('css/goods-create.css') }}">
 </head>

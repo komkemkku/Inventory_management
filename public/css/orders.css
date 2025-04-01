@@ -105,3 +105,15 @@ th {
 .btn-add:hover {
     background-color: #218838;
 }
+.btn-show {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background-color: #0056b3;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+.btn-show:hover {
+    background-color: #0056b3;
+}

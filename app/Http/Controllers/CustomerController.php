@@ -33,18 +33,24 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        // ตรวจสอบและ validate ข้อมูลชื่อ
         $request->validate([
-            'cus_id'   => 'required|unique:cus_name,cus_id',
             'cus_name' => 'required|string|max:255',
         ]);
 
+        $lastCustomerId = DB::table('cus_name')->max('cus_id');
+        $numericId = $lastCustomerId ? intval(str_replace('C-', '', $lastCustomerId)) + 1 : 1;
+        $newCustomerId = 'C-' . str_pad($numericId, 5, '0', STR_PAD_LEFT);
+
+        // เพิ่มข้อมูลลูกค้าใหม่ลงในฐานข้อมูล
         DB::table('cus_name')->insert([
-            'cus_id'   => $request->cus_id,
+            'cus_id'   => $newCustomerId,
             'cus_name' => $request->cus_name,
         ]);
 
+        // ส่งกลับไปยังหน้าแสดงรายการลูกค้า พร้อมข้อความสำเร็จ
         return redirect()->route('customers.index')
-            ->with('success', 'เพิ่มลูกค้าเรียบร้อย!');
+            ->with('success', 'เพิ่มลูกค้าเรียบร้อย! ไอดีลูกค้า: ' . $newCustomerId);
     }
 
     /**

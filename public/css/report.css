@@ -1,0 +1,152 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.filter-section input,
+.filter-section button {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn-display {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: block;
+    width: 150px;
+    margin: 20px auto;
+    padding: 10px 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-display:hover {
+    background-color: #45a049;
+}
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.report-table th,
+.report-table td {
+    border: 1px solid #ddd;
+    text-align: center;
+    padding: 8px;
+}
+
+.report-table th {
+    background-color: #2d89ef;
+    color: white;
+}
+
+.summary {
+    text-align: right;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.action-buttons .btn-print {
+    background-color: #2196f3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.action-buttons .btn-print:hover {
+    background-color: #1976d2;
+}
+
+.action-buttons .btn-exit {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.action-buttons .btn-exit:hover {
+    background-color: #d32f2f;
+}
+
+@media print {
+    body {
+        font-size: 12px;
+        color: #000;
+        background: none;
+    }
+
+    h1 {
+        font-size: 16px;
+    }
+
+    head > title {
+        display: none;
+    }
+
+    @page {
+        margin: 0;
+    }
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .report-table th,
+    .report-table td {
+        font-size: 10px;
+    }
+
+    .action-buttons {
+        display: none;
+    }
+
+    .filter-section {
+        display: none;
+    }
+
+    .summary {
+        font-size: 12px;
+    }
+}

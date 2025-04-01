@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <title>รายละเอียดคำสั่งซื้อ</title>
     <link rel="stylesheet" href="{{ asset('css/detail-order.css') }}">
 </head>
@@ -37,7 +38,7 @@
                     <tr>
                         <th>รหัสสินค้า</th>
                         <th>ชื่อสินค้า</th>
-                        <th>วันกำหนดส่งสินค้า</th>
+                        <th>วันที่กำหนดส่งสินค้า</th>
                         <th>วันที่ส่งสินค้า</th>
                         <th>จำนวนที่สั่ง</th>
                         <th>ราคาต่อหน่วย</th>

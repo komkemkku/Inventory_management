@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GoodsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -128,4 +129,14 @@ Route::delete('/goods/{id}', [GoodsController::class, 'destroy'])
 
 Route::post('/goods', [GoodsController::class, 'store'])
     ->name('goods.store')
+    ->middleware('auth');
+
+
+// report
+Route::get('/reports', [ReportController::class, 'index'])
+    ->name('reports.index')
+    ->middleware('auth');
+
+Route::get('/reports/show', [ReportController::class, 'show'])
+    ->name('reports.show')
     ->middleware('auth');

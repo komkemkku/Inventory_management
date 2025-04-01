@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <title>รายการสินค้า</title>
     <link rel="stylesheet" href="{{ asset('css/goods-index.css') }}">
 </head>

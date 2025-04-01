@@ -1,0 +1,164 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.header {
+    margin-bottom: 60px;
+}
+
+.section-header {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.section-header h2 {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.form-group-cus {
+    /* display: flex; */
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 50px;
+    margin-top: 30px;
+    color: #555;
+}
+.form-group-cus input {
+    flex: 2 50px;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-right: 20px;
+    margin-left: 20px;
+    color: #555;
+}
+
+.form-group-product {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    /* margin-bottom: 50px; */
+    margin-top: 30px;
+    color: #555;
+}
+
+.form-group-product input,
+.form-group-product select {
+    padding: 8px;
+    width: 200px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #555;
+}
+
+.form-group-date {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    /* margin-bottom: 50px; */
+    margin-top: 30px;
+    color: #555;
+}
+
+.form-group-date input,
+.form-group-date select {
+    padding: 8px;
+    width: 200px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #555;
+}
+
+.form-group-amount {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    /* margin-bottom: 50px; */
+    margin-top: 30px;
+    color: #555;
+}
+
+.form-group-amount input,
+.form-group-amount select {
+    padding: 8px;
+    width: 200px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 20px;
+    margin-right: 20px;
+    color: #555;
+}
+
+
+.form-group input[readonly] {
+    background-color: #e9ecef;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
+
+.action-buttons {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.action-buttons button,
+.action-buttons a {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.btn-save {
+    background-color: #4caf50;
+    color: white;
+}
+
+.btn-save:hover {
+    background-color: #45a049;
+}
+
+.btn-back {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-back:hover {
+    background-color: #e53935;
+}

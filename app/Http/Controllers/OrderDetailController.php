@@ -153,16 +153,46 @@ class OrderDetailController extends Controller
     public function edit($id)
     {
         // ดึงข้อมูลสินค้าที่จะแก้ไข
-        $orderDetail = DB::table('d_order')->where('d_id', $id)->first();
+        $orderDetail = DB::table('d_order')
+            ->join('goods_name', 'd_order.good_id', '=', 'goods_name.goods_id')
+            ->select(
+                'd_order.d_id as d_id',
+                'd_order.order_id as order_id',
+                'goods_name.goods_id as product_code',
+                'goods_name.goods_name as product_name',
+                'd_order.ord_date as ord_date',
+                'd_order.fin_date as fin_date',
+                'd_order.amount as quantity',
+                'goods_name.cost_unit as unit_price',
+                'd_order.tot_prc as total_price'
+            )
+            ->where('d_order.d_id', $id)
+            ->first();
 
         if (!$orderDetail) {
             return redirect()->route('orders.index')->with('error', 'ไม่พบรายการสินค้าที่ระบุ');
         }
 
-        // ดึงรายการสินค้าสำหรับแก้ไข
+        // ดึงข้อมูลลูกค้าและคำสั่งซื้อที่เกี่ยวข้อง
+        $order = DB::table('h_order')
+            ->join('cus_name', 'h_order.cus_id', '=', 'cus_name.cus_id')
+            ->select(
+                'cus_name.cus_id as customer_code',
+                'cus_name.cus_name as customer_name',
+                'h_order.order_date as order_date',
+                'h_order.order_id as order_number'
+            )
+            ->where('h_order.order_id', $orderDetail->order_id)
+            ->first();
+
+        if (!$order) {
+            return redirect()->route('orders.index')->with('error', 'ไม่พบข้อมูลคำสั่งซื้อที่ระบุ');
+        }
+
+        // ดึงรายการสินค้าทั้งหมดเพื่อให้เลือกได้
         $goods = DB::table('goods_name')->get();
 
-        return view('orderDetails.edit', compact('orderDetail', 'goods'));
+        return view('order-details.edit', compact('orderDetail', 'order', 'goods'));
     }
 
     /**
@@ -172,15 +202,44 @@ class OrderDetailController extends Controller
     {
         $request->validate([
             'good_id' => 'required|exists:goods_name,goods_id',
-            'amount' => 'required|integer|min:1',
+            'amount' => 'nullable|integer|min:1',
+            'ord_date' => 'nullable|date',
+            'fin_date' => 'nullable|date',
         ]);
 
+        // ดึงราคาต่อหน่วยจากตารางสินค้า
+        $unitPrice = DB::table('goods_name')
+            ->where('goods_id', $request->good_id)
+            ->value('cost_unit');
+
+        if (!$unitPrice) {
+            return redirect()->route('orderDetails.edit', $id)->with('error', 'ไม่พบราคาสินค้าที่เลือก');
+        }
+
+        // เตรียมข้อมูลที่จะอัปเดต
+        $dataToUpdate = [
+            'good_id' => $request->good_id,
+            'cost_unit' => $unitPrice,
+        ];
+
+        // ตรวจสอบและอัปเดตจำนวนสินค้า
+        if ($request->amount) {
+            $dataToUpdate['amount'] = $request->amount;
+            $dataToUpdate['tot_prc'] = $request->amount * $unitPrice;
+        }
+
+        // ตรวจสอบและอัปเดตวันที่
+        if ($request->ord_date) {
+            $dataToUpdate['ord_date'] = $request->ord_date;
+        }
+        if ($request->fin_date) {
+            $dataToUpdate['fin_date'] = $request->fin_date;
+        }
+
+        // อัปเดตข้อมูลสินค้าในฐานข้อมูล
         DB::table('d_order')
             ->where('d_id', $id)
-            ->update([
-                'good_id' => $request->good_id,
-                'amount' => $request->amount,
-            ]);
+            ->update($dataToUpdate);
 
         return redirect()->route('orderDetails.index', $request->order_id)
             ->with('success', 'แก้ไขข้อมูลสินค้าเรียบร้อย!');

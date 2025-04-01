@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <title>แสดงข้อมูลการสั่งซื้อสินค้า</title>
     <link rel="stylesheet" href="{{ asset('css/orders.css') }}">
 </head>
@@ -30,9 +31,9 @@
     <table>
         <thead>
             <tr>
-                <th>รหัสลูกค้า (CUS_ID)</th>
-                <th>ชื่อลูกค้า (CUS_NAME)</th>
-                <th>หมายเลขคำสั่งซื้อ (H_ORDER_NO)</th>
+                <th>รหัสลูกค้า</th>
+                <th>ชื่อลูกค้า</th>
+                <th>หมายเลขคำสั่งซื้อ</th>
                 <th>จำนวนรายการที่สั่ง</th>
                 <th>จำนวนที่สั่ง</th>
                 <th>Action</th>
@@ -74,6 +75,9 @@
 
     <a href="{{ route('orders.create') }}" class="btn-add">
         เพิ่มข้อมูลการสั่งซื้อสินค้า
+    </a><br>
+    <a href="{{ route('reports.index') }}" class="btn-show">
+        รายงานการสั่งซื้อสินค้า
     </a>
 
 </body>

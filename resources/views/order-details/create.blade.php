@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <title>การบันทึก/แก้ไขคำสั่งซื้อสินค้า</title>
     <link rel="stylesheet" href="{{ asset('css/order-detail-create.css') }}">
 </head>
@@ -50,6 +51,7 @@
             <div class="form-group-product">
                 <label for="good_id">เลือกสินค้า :</label>
                 <select name="good_id" id="good_id" required onchange="updateCostUnit()">
+                    <option value="" data-name="">-- เลือกสินค้า --</option>
                     @foreach($goods as $good)
                     <option value="{{ $good->goods_id }}" data-cost="{{ $good->cost_unit }}">{{ $good->goods_name }}</option>
                     @endforeach

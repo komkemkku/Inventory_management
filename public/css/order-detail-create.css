@@ -1,6 +1,6 @@
 body {
     font-family: "Arial", sans-serif;
-    background-color: #f4f4f9; /* เปลี่ยนพื้นหลังให้ดูสดใส */
+    background-color: #f4f4f9; 
     margin: 0;
     padding: 0;
 }
@@ -57,19 +57,30 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    color: #555;
     margin-bottom: 15px;
     /* justify-content: space-between; */
+}
+.form-group-date [for="fin_date"] {
+    margin-left: 60px;
 }
 
 .form-group-product select,
 .form-group-date input,
 .form-group-price input {
     padding: 10px;
+    margin-left: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
-    color: #333;
+    color: #555;
     transition: border-color 0.3s, box-shadow 0.3s;
+}
+.form-group-product select {
+    margin-left: 22px;
+}
+.form-group-price [name="amount"] {
+    margin-left: 50px;
 }
 
 .form-field label {
@@ -78,15 +89,19 @@ body {
     font-size: 14px;
     color: #555;
 }
+.form-field label [name="fin_date"] {
+    margin-left: 10px;
+}
 
 .form-field input,
 .form-field select {
     flex: 2;
     padding: 12px;
+    margin-left: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
-    color: #333;
+    color: #555;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
 
@@ -116,7 +131,7 @@ button,
 button:hover,
 .btn-submit:hover {
     background-color: #45a049;
-    transform: translateY(-2px); /* เพิ่มการเคลื่อนที่ของปุ่ม */
+    transform: translateY(-2px);
 }
 
 table {

@@ -20,7 +20,7 @@ body {
 }
 .header-buttons a {
     display: inline-block;
-    background-color: #28a745;
+    background-color: #c82333;
     color: #fff;
     padding: 0.6rem 1.2rem;
     border-radius: 4px;
@@ -30,7 +30,7 @@ body {
 }
 
 .header-buttons a:hover {
-    background-color: #218838;
+    background-color: #c82333;
 }
 
 .btn-logout {
@@ -101,6 +101,7 @@ th {
     text-decoration: none;
     border-radius: 4px;
     margin-top: 30px;
+    /* width: 250px; */
 }
 .btn-add:hover {
     background-color: #218838;
@@ -113,7 +114,21 @@ th {
     text-decoration: none;
     border-radius: 4px;
     margin-top: 10px;
+    width: 250px;
 }
 .btn-show:hover {
     background-color: #0056b3;
+}
+.btn-proces {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    background-color: #daa71d;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    width: 250px;
+}
+.btn-proces:hover {
+    background-color: #daa71d;
 }

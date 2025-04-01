@@ -15,13 +15,19 @@
         <div class="header-buttons">
             <!-- ปุ่มเพิ่มสินค้า -->
             <a href="{{ route('goods.create') }}" class="btn-add">เพิ่มสินค้า</a>
-            <a href="{{ route('orders.index') }}" class="btn-back">กลับหน้าหลัก</a>
+            <a href="{{ route('home.index') }}" class="btn-back">หน้าเมนู</a>
         </div>
     </div>
 
     @if(session('success'))
-    <div class="success-msg">
+    <div class="alert alert-success">
         {{ session('success') }}
+    </div>
+    @endif
+
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
     </div>
     @endif
 

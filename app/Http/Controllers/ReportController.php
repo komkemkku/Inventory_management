@@ -53,7 +53,6 @@ class ReportController extends Controller
         $totalAmount = $orders->sum('amount');
         $totalPrice = $orders->sum('total_price');
 
-        // ส่งข้อมูลไปยัง View
         return view('reports.index', compact('orders', 'totalAmount', 'totalPrice', 'startDate', 'endDate'));
     }
 }

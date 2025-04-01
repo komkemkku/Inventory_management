@@ -3,8 +3,10 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\GoodsController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderDetailController;
+use App\Http\Controllers\ProcessingController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -139,4 +141,20 @@ Route::get('/reports', [ReportController::class, 'index'])
 
 Route::get('/reports/show', [ReportController::class, 'show'])
     ->name('reports.show')
+    ->middleware('auth');
+
+
+// processing
+Route::get('/processing', [ProcessingController::class, 'index'])
+    ->name('processings.index')
+    ->middleware('auth');
+
+Route::post('/processing', [ProcessingController::class, 'process'])
+    ->name('processings.process')
+    ->middleware('auth');
+
+
+// index
+Route::get('/', [IndexController::class, 'index'])
+    ->name('home.index')
     ->middleware('auth');

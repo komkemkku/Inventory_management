@@ -45,10 +45,8 @@ class OrderDetailController extends Controller
             ->where('d_order.order_id', $orderId)
             ->get();
 
-        // ดึงรายการสินค้าทั้งหมดสำหรับเลือกเพิ่ม
         $goods = DB::table('goods_name')->get();
 
-        // ส่งข้อมูลไปยัง View
         return view('order-details.index', compact('order', 'orderItems', 'goods'));
     }
 
@@ -89,10 +87,10 @@ class OrderDetailController extends Controller
             ->where('d_order.order_id', $orderId)
             ->get();
 
-        // ดึงรายการสินค้าทั้งหมด
+
         $goods = DB::table('goods_name')->get();
 
-        // ส่งข้อมูลไปยัง View
+
         return view('order-details.create', compact('order', 'orderItems', 'goods'));
     }
 

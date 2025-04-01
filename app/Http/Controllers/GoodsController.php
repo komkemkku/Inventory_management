@@ -88,7 +88,6 @@ class GoodsController extends Controller
             'cost_unit'  => 'required|numeric'
         ]);
 
-        // ตรวจสอบว่าสินค้าที่จะแก้ไขมีอยู่จริงหรือไม่
         $good = DB::table('goods_name')->where('goods_id', $id)->first();
         if (!$good) {
             abort(404, 'ไม่พบสินค้า');
@@ -107,18 +106,22 @@ class GoodsController extends Controller
     /**
      * ลบสินค้า (destroy).
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        // ตรวจสอบว่าสินค้ามีอยู่หรือไม่
-        $good = DB::table('goods_name')->where('goods_id', $id)->first();
-        if (!$good) {
-            abort(404, 'ไม่พบสินค้า');
+        // ตรวจสอบว่าสินค้ามีการเชื่อมโยงกับคำสั่งซื้อหรือไม่
+        $referencedOrder = DB::table('d_order')->where('good_id', $id)->exists();
+
+        if ($referencedOrder) {
+            return back()->with('error', 'ไม่สามารถลบสินค้าได้ เนื่องจากสินค้าถูกใช้งานในคำสั่งซื้อ');
         }
 
-        // ลบสินค้า
-        DB::table('goods_name')->where('goods_id', $id)->delete();
+        try {
+            // ลบสินค้า
+            DB::table('goods_name')->where('goods_id', $id)->delete();
 
-        return redirect()->route('goods.index')
-            ->with('success', 'ลบสินค้าเรียบร้อย!');
+            return back()->with('success', 'ลบสินค้าเรียบร้อยแล้ว!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'เกิดข้อผิดพลาด: ' . $e->getMessage());
+        }
     }
 }

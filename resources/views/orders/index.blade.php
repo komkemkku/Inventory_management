@@ -13,12 +13,13 @@
     <div class="header-row">
         <h1 class="header-title">ตารางข้อมูลการสั่งซื้อสินค้า</h1>
         <div class="header-buttons">
-            <a href="{{ route('goods.index') }}">สินค้า</a>
+        <a href="{{ route('home.index') }}">หน้าเมนู</a>
+            <!-- <a href="{{ route('goods.index') }}">สินค้า</a>
             <a href="{{ route('customers.index') }}">ลูกค้า</a>
             <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                 @csrf
                 <button type="submit" class="btn-logout">ออกจากระบบ</button>
-            </form>
+            </form> -->
         </div>
     </div>
 
@@ -76,9 +77,12 @@
     <a href="{{ route('orders.create') }}" class="btn-add">
         เพิ่มข้อมูลการสั่งซื้อสินค้า
     </a><br>
-    <a href="{{ route('reports.index') }}" class="btn-show">
-        รายงานการสั่งซื้อสินค้า
-    </a>
+    <!-- <a href="{{ route('reports.index') }}" class="btn-show">
+        รายงานกำหนดการสั่งซื้อสินค้า
+    </a><br>
+    <a href="{{ route('processings.index') }}" class="btn-proces">
+        การประมวลผลข้อมูลสั่งซื้อสินค้า
+    </a><br> -->
 
 </body>
 <!-- โหลด SweetAlert2 -->

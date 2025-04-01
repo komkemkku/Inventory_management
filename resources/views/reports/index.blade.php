@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>รายงานคำสั่งซื้อ</title>
+    <title>รายงานกำหนดการสั่งซื้อสินค้า</title>
     <link rel="stylesheet" href="{{ asset('css/report.css') }}">
 </head>
 <script>
@@ -87,7 +87,7 @@
         <!-- Action Buttons -->
         <div class="action-buttons">
             <button onclick="window.print()" class="btn-print">พิมพ์</button>
-            <a href="{{ route('orders.index') }}" class="btn-exit">ออก</a>
+            <a href="{{ route('home.index') }}" class="btn-exit">ออก</a>
         </div>
     </div>
 </body>

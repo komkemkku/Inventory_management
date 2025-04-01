@@ -14,7 +14,7 @@
         <h1 class="header-title">ตารางข้อมูลลูกค้า</h1>
         <div class="header-buttons">
             <a href="{{ route('customers.create') }}" class="btn-add">เพิ่มลูกค้า</a>
-            <a href="{{ route('orders.index') }}" class="btn-back">กลับหน้าหลัก</a>
+            <a href="{{ route('home.index') }}" class="btn-back">หน้าเมนู</a>
         </div>
     </div>
 

@@ -50,7 +50,7 @@ class CustomerController extends Controller
 
         // ส่งกลับไปยังหน้าแสดงรายการลูกค้า พร้อมข้อความสำเร็จ
         return redirect()->route('customers.index')
-            ->with('success', 'เพิ่มลูกค้าเรียบร้อย! ไอดีลูกค้า: ' . $newCustomerId);
+            ->with('success', 'เพิ่มลูกค้าเรียบร้อย!');
     }
 
     /**

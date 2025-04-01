@@ -41,7 +41,7 @@ body {
 
 .header-buttons .btn-back {
     display: inline-block;
-    background-color: #ff2c2c;
+    background-color: #c82333;
     color: #fff;
     padding: 0.6rem 1.2rem;
     border-radius: 4px;
@@ -50,7 +50,7 @@ body {
 }
 
 .header-buttons .btn-back:hover {
-    background-color: #ff2c2c;
+    background-color: #c82333;
 }
 
 .success-msg {

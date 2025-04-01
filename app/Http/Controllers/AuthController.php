@@ -41,7 +41,7 @@ class AuthController extends Controller
         Auth::login($user);
 
 
-        return redirect()->route('orders.index')
+        return redirect()->route('home.index')
             ->with('success', 'ลงทะเบียนสำเร็จ!');
     }
 
@@ -66,7 +66,7 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
             // Redirect ไปยังหน้า orders.index หลังจากล็อกอินสำเร็จ
-            return redirect()->intended(route('orders.index'));
+            return redirect()->intended(route('home.index'));
         }
         return back()->withErrors([
             'username' => 'ชื่อผู้ใช้ไม่ถูกต้อง',

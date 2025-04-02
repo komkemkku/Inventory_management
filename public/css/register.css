@@ -17,7 +17,7 @@ body {
 .register-container {
     background: #fff;
     width: 800px;
-    height: 700px;
+    height: 750px;
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -56,6 +56,13 @@ body {
     border-radius: 10px;
     border: 1px solid #ccc;
     outline: none;
+}
+
+.form-group p {
+    margin-top: 0.3rem;
+    margin-left: 180px;
+    font-size: 0.9rem;
+    color: #999;
 }
 
 .btn {

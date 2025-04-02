@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="{{ asset('images/logo.png') }}">
     <title>Login - Inventory Management</title>
     <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 </head>
@@ -16,53 +15,44 @@
 
         <h2>Login</h2>
 
-        <!-- @if($errors->has('username') || $errors->has('password'))
-        <script>
-            Swal.fire({
-                title: 'เกิดข้อผิดพลาด!',
-                text: `
-                @if($errors->has('username'))
-                    {{ $errors->first('username') }}
-                @endif
-                @if($errors->has('password'))
-                    {{ $errors->first('password') }}
-                @endif
-            `,
-                icon: 'error',
-                confirmButtonText: 'ตกลง',
-                confirmButtonColor: '#d33',
-            });
-        </script>
-        @endif -->
+        <!-- แสดงข้อความแจ้งเตือน -->
+        @if($errors->any())
+        <div style="color: red; margin-bottom: 15px; display: flex; justify-content: center; align-items: center;">
+            {{ $errors->first() }}
+        </div>
+        @endif
 
         <form action="{{ url('/login') }}" method="POST">
             @csrf
 
             <div class="form-group">
-                <label>Username :</label>
+                <label for="username">Username :</label>
                 <input
                     type="text"
                     name="username"
+                    id="username"
+                    class="form-control"
                     value="{{ old('username') }}"
                     required>
             </div>
 
             <div class="form-group">
-                <label>Password :</label>
+                <label for="password">Password :</label>
                 <input
                     type="password"
                     name="password"
+                    id="password"
+                    class="form-control"
                     required>
             </div>
 
-            <button type="submit" class="btn">Login</button>
+            <button type="submit" class="btn btn-primary">Login</button>
         </form>
+
         <div class="register">
-            <p>Don't have an account ? <a href="{{ route('register') }}">Register now</a></p>
+            <p>Don't have an account? <a href="{{ route('register') }}">Register now</a></p>
         </div>
     </div>
-
 </body>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </html>

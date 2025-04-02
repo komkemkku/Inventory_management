@@ -22,27 +22,34 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
+        try {
+            $validatedData = $request->validate([
+                'name' => 'required|string|max:255',
+                'username' => 'required|string|max:50|unique:users,username',
+                'password' => 'required|string|min:4',
+            ]);
 
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:50|unique:users,username',
-            'password' => 'required|string|min:4'
-        ]);
-
-
-        $user = new User();
-        $user->name = $validatedData['name'];
-        $user->username = $validatedData['username'];
-        // เข้ารหัสรหัสผ่านก่อนบันทึก
-        $user->password = Hash::make($validatedData['password']);
-        $user->save();
-
-
-        Auth::login($user);
+            // สร้างผู้ใช้งานใหม่
+            $user = new User();
+            $user->name = $validatedData['name'];
+            $user->username = $validatedData['username'];
+            $user->password = Hash::make($validatedData['password']);
+            $user->save();
 
 
-        return redirect()->route('home.index')
-            ->with('success', 'ลงทะเบียนสำเร็จ!');
+            Auth::login($user);
+
+            return redirect()->route('login')->with('success', 'ลงทะเบียนสำเร็จ!');
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            if ($e->errors()['username'] ?? false) {
+                return back()->withErrors([
+                    'username' => 'ชื่อผู้ใช้งานนี้มีอยู่ในระบบแล้ว',
+                ])->withInput();
+            }
+
+
+            return back()->withErrors($e->errors())->withInput();
+        }
     }
 
     /**
@@ -65,11 +72,10 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            // Redirect ไปยังหน้า orders.index หลังจากล็อกอินสำเร็จ
             return redirect()->intended(route('home.index'));
         }
         return back()->withErrors([
-            'username' => 'ชื่อผู้ใช้ไม่ถูกต้อง',
+            'username' => 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง',
             'password' => 'รหัสผ่านไม่ถูกต้อง',
         ]);
     }

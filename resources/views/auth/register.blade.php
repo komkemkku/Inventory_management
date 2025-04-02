@@ -16,6 +16,9 @@
         <form action="{{ url('/register') }}" method="POST">
             @csrf
             <h2 class="register-title">Register</h2>
+            @error('username')
+            <span style="color: red; margin-bottom: 15px; display: flex; justify-content: center; align-items: center;">{{ $message }}</span>
+            @enderror
 
             <div class="form-group">
                 <label for="name">Name :</label>
@@ -30,6 +33,7 @@
             <div class="form-group">
                 <label for="password">Password :</label>
                 <input type="password" name="password" id="password" required>
+                <p>(กรุณากรอกรหัสผ่านมากกว่า 4 ตัว)</p>
             </div>
 
             <button type="submit" class="btn">Register</button>

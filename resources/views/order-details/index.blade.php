@@ -43,6 +43,7 @@
                         <th>จำนวนที่สั่ง</th>
                         <th>ราคาต่อหน่วย</th>
                         <th>ราคารวม</th>
+                        <th>สถานะ</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -57,6 +58,16 @@
                         <td>{{ $item->quantity }}</td>
                         <td>{{ $item->unit_price }}</td>
                         <td>{{ $item->total_price }}</td>
+                        <!-- <td>{{ $item->status }}</td> -->
+                        <td>
+                            @if($item->status === 'pending')
+                            <span style="color: orange;">กำลังรอดำเนินการ</span>
+                            @elseif($item->status === 'shipped')
+                            <span style="color: green;">จัดส่งแล้ว</span>
+                            @else
+                            <span style="color: gray;">ไม่ทราบสถานะ</span>
+                            @endif
+                        </td>
                         <td>
                             <a href="{{ route('orderDetails.edit', $item->d_id) }}" class="action-btn btn-edit">แก้ไข</a>
                             <form action="{{ route('orderDetails.destroy', $item->d_id) }}" method="POST" style="display: inline;">
@@ -69,7 +80,7 @@
                     @endforeach
                     @else
                     <tr>
-                        <td colspan="8" style="text-align: center; color: red;">ไม่พบข้อมูลสินค้า</td>
+                        <td colspan="9" style="text-align: center; color: red;">ไม่พบข้อมูลสินค้า</td>
                     </tr>
                     @endif
                 </tbody>

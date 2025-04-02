@@ -39,9 +39,17 @@
             @method('PUT')
             <input type="hidden" name="order_id" value="{{ $order->order_number }}">
 
+            <div class="status">
+                <label>สถานะ : </label>
+                <select name="status" id="status" class="form-control">
+                    <option value="pending" {{ $orderDetail->status === 'pending' ? 'selected' : '' }}>กำลังรอดำเนินการ</option>
+                    <option value="shipped" {{ $orderDetail->status === 'shipped' ? 'selected' : '' }}>จัดส่งแล้ว</option>
+                </select>
+            </div>
+
             <!-- ดึงข้อมูลสินค้าสำหรับการแก้ไข -->
             <div class="form-group-product">
-                <label>รหัสสินค้า:</label>
+                <label>รหัสสินค้า :</label>
                 <select id="product_code" name="good_id" onchange="updateProductDetails()" required>
                     <option value=""> >>---เลือกสินค้า---<< </option>
                             @foreach($goods as $good)
@@ -51,25 +59,25 @@
                     </option>
                     @endforeach
                 </select>
-                <label>ชื่อสินค้า:</label>
+                <label>ชื่อสินค้า :</label>
                 <input type="text" id="product_name" value="{{ $orderDetail->product_name }}" readonly>
             </div>
 
             <!-- ส่วนวันที่ -->
             <div class="form-group-date">
-                <label>วันที่ส่งสินค้า:</label>
+                <label>วันที่ส่งสินค้า :</label>
                 <input type="date" id="actual_delivery_date" name="ord_date" value="{{ $orderDetail->ord_date }}">
-                <label>วันที่กำหนดส่งสินค้า:</label>
+                <label>วันที่กำหนดส่งสินค้า :</label>
                 <input type="date" id="delivery_date" name="fin_date" value="{{ $orderDetail->fin_date }}">
             </div>
 
             <!-- ส่วนจำนวนและราคา -->
             <div class="form-group-amount">
-                <label>จำนวนที่สั่ง:</label>
+                <label>จำนวนที่สั่ง :</label>
                 <input type="number" id="quantity" name="amount" value="{{ $orderDetail->quantity }}" min="1" onchange="updateTotalPrice()">
-                <label>ราคาต่อหน่วย:</label>
+                <label>ราคาต่อหน่วย :</label>
                 <input type="number" id="cost_unit" name="cost_unit" value="{{ $orderDetail->unit_price }}" readonly>
-                <label>ราคารวม:</label>
+                <label>ราคารวม :</label>
                 <input type="number" id="total_price" name="tot_prc" value="{{ $orderDetail->total_price }}" readonly>
             </div>
 

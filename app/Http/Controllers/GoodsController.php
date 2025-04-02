@@ -112,7 +112,7 @@ class GoodsController extends Controller
         $referencedOrder = DB::table('d_order')->where('good_id', $id)->exists();
 
         if ($referencedOrder) {
-            return back()->with('error', 'ไม่สามารถลบสินค้าได้ เนื่องจากสินค้าถูกใช้งานในคำสั่งซื้อ');
+            return back()->with('error', '!!! ไม่สามารถลบสินค้าได้ เนื่องจากสินค้าถูกใช้งานในคำสั่งซื้อ !!!');
         }
 
         try {

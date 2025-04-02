@@ -30,11 +30,13 @@ class ProcessingController extends Controller
         $startDate = $request->start_date;
         $endDate = $request->end_date;
 
-        // ดึงข้อมูลจาก h_order และ d_order
+        // ดึงข้อมูลเฉพาะที่มีสถานะ shipped
         $orders = DB::table('h_order')
             ->join('d_order', 'h_order.order_id', '=', 'd_order.order_id')
             ->whereBetween('d_order.fin_date', [$startDate, $endDate])
+            ->where('d_order.status', 'shipped')
             ->select(
+                'h_order.order_id',
                 'h_order.cus_id',
                 'd_order.good_id',
                 'h_order.order_date as doc_date',
@@ -46,7 +48,6 @@ class ProcessingController extends Controller
             )
             ->get();
 
-        // ตรวจสอบว่ามีข้อมูลในช่วงวันที่หรือไม่
         if ($orders->isEmpty()) {
             return back()->with('error', 'ไม่พบข้อมูลในช่วงวันที่ที่เลือก');
         }
@@ -65,6 +66,21 @@ class ProcessingController extends Controller
             ]);
         }
 
-        return back()->with('success', 'ประมวลผลข้อมูลเรียบร้อยแล้ว!');
+        // ลบข้อมูลเฉพาะสถานะ shipped ใน d_order
+        DB::table('d_order')
+            ->whereBetween('fin_date', [$startDate, $endDate])
+            ->where('status', 'shipped')
+            ->delete();
+
+        // ลบข้อมูลใน h_order ที่ไม่มีรายการสินค้าคงเหลือใน d_order
+        DB::table('h_order')
+            ->whereNotExists(function ($query) {
+                $query->select(DB::raw(1))
+                    ->from('d_order')
+                    ->whereColumn('h_order.order_id', 'd_order.order_id');
+            })
+            ->delete();
+
+        return back()->with('success', 'ประมวลผลข้อมูลและลบคำสั่งซื้อที่ไม่มีรายการสำเร็จเรียบร้อยแล้ว!');
     }
 }

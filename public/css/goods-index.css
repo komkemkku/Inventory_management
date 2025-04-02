@@ -53,11 +53,6 @@ body {
     background-color: #c82333;
 }
 
-.success-msg {
-    color: green;
-    margin-bottom: 1rem;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;

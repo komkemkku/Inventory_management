@@ -90,10 +90,27 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
+        try {
+            // ตรวจสอบที่ h_order เพื่อดูว่า cus_id มีคำสั่งซื้อหรือไม่
+            $referencedOrder = DB::table('h_order')
+                ->where('cus_id', $id)
+                ->pluck('order_id');
 
-        DB::table('cus_name')->where('cus_id', $id)->delete();
+            if ($referencedOrder->isNotEmpty()) {
+                $hasDetails = DB::table('d_order')
+                    ->whereIn('order_id', $referencedOrder)
+                    ->exists();
 
-        return redirect()->route('customers.index')
-            ->with('success', 'ลบลูกค้าเรียบร้อย!');
+                if ($hasDetails) {
+                    return back()->with('error', '!!! ไม่สามารถลบลูกค้าได้ เนื่องจากลูกค้าถูกใช้งานในคำสั่งซื้อ !!!');
+                }
+            }
+
+            DB::table('cus_name')->where('cus_id', $id)->delete();
+
+            return back()->with('success', 'ลบลูกค้าเรียบร้อยแล้ว!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'เกิดข้อผิดพลาด: ' . $e->getMessage());
+        }
     }
 }

@@ -39,6 +39,7 @@ class OrderDetailController extends Controller
                 'd_order.ord_date as order_date',
                 'd_order.fin_date as final_date',
                 'd_order.amount as quantity',
+                'd_order.status as status',
                 'goods_name.cost_unit as unit_price',
                 DB::raw('d_order.amount * goods_name.cost_unit as total_price')
             )
@@ -138,6 +139,7 @@ class OrderDetailController extends Controller
                 'amount'     => $request->amount,
                 'cost_unit'  => $request->cost_unit,
                 'tot_prc'    => $request->amount * $request->cost_unit,
+                'status' => 'pending',
             ]);
 
             return redirect()->route('orderDetails.create', $request->order_id)
@@ -162,7 +164,9 @@ class OrderDetailController extends Controller
                 'd_order.fin_date as fin_date',
                 'd_order.amount as quantity',
                 'goods_name.cost_unit as unit_price',
-                'd_order.tot_prc as total_price'
+                'd_order.tot_prc as total_price',
+                'd_order.status as status'
+
             )
             ->where('d_order.d_id', $id)
             ->first();
@@ -170,6 +174,9 @@ class OrderDetailController extends Controller
         if (!$orderDetail) {
             return redirect()->route('orders.index')->with('error', 'ไม่พบรายการสินค้าที่ระบุ');
         }
+
+        $statuses = ['pending', 'shipped'];
+
 
         // ดึงข้อมูลลูกค้าและคำสั่งซื้อที่เกี่ยวข้อง
         $order = DB::table('h_order')
@@ -190,7 +197,7 @@ class OrderDetailController extends Controller
         // ดึงรายการสินค้าทั้งหมดเพื่อให้เลือกได้
         $goods = DB::table('goods_name')->get();
 
-        return view('order-details.edit', compact('orderDetail', 'order', 'goods'));
+        return view('order-details.edit', compact('orderDetail', 'order', 'goods', 'statuses'));
     }
 
     /**
@@ -203,6 +210,8 @@ class OrderDetailController extends Controller
             'amount' => 'nullable|integer|min:1',
             'ord_date' => 'nullable|date',
             'fin_date' => 'nullable|date',
+            'status' => 'required|in:pending,shipped',
+
         ]);
 
         // ดึงราคาต่อหน่วยจากตารางสินค้า
@@ -218,6 +227,8 @@ class OrderDetailController extends Controller
         $dataToUpdate = [
             'good_id' => $request->good_id,
             'cost_unit' => $unitPrice,
+            'status' => $request->status,
+
         ];
 
         // ตรวจสอบและอัปเดตจำนวนสินค้า
